@@ -13,6 +13,8 @@ class BlogCategory(admin.ModelAdmin):
 class BlogClass(admin.ModelAdmin):
     prepopulated_fields = {'slug':('title',)}
     list_display = ['title','slug']
+    search_fields = ('title', "created_at")
+    list_filter = [ "created_at"]
 
 
 admin.site.register(Comment)
