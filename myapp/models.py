@@ -6,6 +6,8 @@ from taggit.managers import TaggableManager
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='bo`lim nomi')
     slug = models.SlugField(max_length=100,unique=True)
+    text = models.TextField(blank=True, null=True)
+    img = models.ImageField(upload_to = 'category',blank = True, null = True)
     
     def __str__(self) -> str:
         return self.name
