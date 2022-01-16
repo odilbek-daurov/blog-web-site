@@ -1,0 +1,6 @@
+asgiref==3.4.1
+backports.zoneinfo==0.2.1
+Django==4.0.1
+django-taggit @ git+https://github.com/jazzband/django-taggit.git@d0833966d357ed1e1b9b1f40c39c1ed99affbf9b
+Pillow==9.0.0
+sqlparse==0.4.2
