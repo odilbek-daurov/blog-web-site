@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+<title>{% block title %}
+    MyBlog
+    {% endblock title %}</title>
+
+{% block content %}
+
+<h1>barcha kategory </h1>
+{% for i in categories %}
+<div class="row">
+
+    <div class="col-4">
+        <img style="width: 250px;" src="{{ i.img.url}}" alt="">
+    </div>
+    <div class="col-8">
+        <h2><a href="{% url 'category_blog' i.slug %}">{{ i.name }}</a></h2>
+        <h5>bloglar soni {{ i.bolim.count }}</h5>
+        <p>{{ i.text }}</p>
+    </div>
+</div>
+
+{%endfor%}
+<hr>
+
+
+{% endblock content %}

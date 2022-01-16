@@ -9,3 +9,8 @@ def category(request):
 def tags(request):
     tags = Tag.objects.all()
     return {'tags':tags}
+
+
+def views_last(request):
+    last = Blog.objects.order_by('-views')
+    return { 'last':last }

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+<title>{% block title %}
+    MyBlog
+    {% endblock title %}</title>
+
+{% block content %}
+
+<div>
+    <h2>{{ blog.title }}</h2>
+    <img style="width: 400px;" src="{{ blog.image.url }}">
+    <p>{{ blog.description }}</p>
+    <p> Sana {{blog.created_at }} | ko`rish {{ blog.views }} </p>
+    <p> Blog yaratuvchi <strong> {{i.user.username}}</strong> </p>
+    {% for tag in blog.tags.all%}
+    <a href="{% url 'tag_list' tag.slug %}">{{ tag.name }}  </a> 
+    {%endfor%}
+</div>
+
+
+{% endblock content %}

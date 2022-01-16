@@ -8,13 +8,13 @@
   <h1>Barcha bloglar</h1>
       {% for i in blogs %}
       <div>
-        <h2>{{ i.title }}</h2>
+        <h2><a href="{% url 'blog_detail' i.slug %}">{{ i.title }}</a></h2>
         <img style="width: 400px;" src="{{ i.image.url}}" alt="">
         <p>{{ i.description }}</p>
         <p> Sana {{i.created_at }} | ko`rish {{ i.views }} </p>
         <p> Blog yaratuvchi <strong> {{i.user.username}}</strong> </p>
         {% for tag in i.tags.all%}
-        {{ tag.name }}
+        <a href="{% url 'tag_list' tag.slug %}">{{ tag.name }}</a>
         {%endfor%}
     </div>
       {%endfor%}
