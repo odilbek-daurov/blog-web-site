@@ -1,6 +1,7 @@
 from taggit.views import Tag
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Blog, Category
+from .forms import BlogForm
 
 
 
@@ -51,5 +52,19 @@ def tag_list(request, slug):
         'tag':tag,
     }
     return render(request,'home.html',context)
-    
+
+
+def blog_create(request):
+    form = BlogForm()
+    if request.method == 'POST':
+        form = BlogForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('blog_list')
+        
+    context = {
+        'form':form
+    }
+
+    return render(request, 'blog_create.html', context)
     
