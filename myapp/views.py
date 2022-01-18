@@ -1,6 +1,5 @@
-from unicodedata import category
 from taggit.views import Tag
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from .models import Blog, Category
 from .forms import BlogForm
 from django.template.defaultfilters import slugify
@@ -101,3 +100,15 @@ def blog_updete(request, slug):
 
     return render(request, 'blog_updete.html', context)
     
+
+def blog_delete(request, slug):
+    blog = get_object_or_404(Blog, slug = slug)
+    if request.method == 'POST':
+        blog.delete()
+        return redirect('blog_list')
+
+    context = {
+        'blog':blog
+    }
+    
+    return render(request, 'blog_delete.html', context)
