@@ -4,6 +4,16 @@
   MyBlog
   {% endblock title %}</title>
 
+  {% block right %}
+    
+  {% for blog in blogs %}
+  
+     <a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a><br>
+  
+  {% endfor %}
+
+  {% endblock right %}
+
 {% block content %}
 <h1>{{ category.name }}</h1>
 {% for i in blogs %}

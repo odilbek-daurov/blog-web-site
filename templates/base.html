@@ -112,10 +112,10 @@
                 {% endfor %}
                 <hr>
                 
-                 {% for blog in last %}
-                 <a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a><br>
-
-                 {%endfor%}
+                    {% block right %}
+                      
+                    
+                    {% endblock right %}
                 <hr>
 
                 {% for tag in tags %}
