@@ -4,15 +4,15 @@
     MyBlog
     {% endblock title %}</title>
 
-    {% block right %}
-    
-    {% for blogs in top_blogs %}
-    {%if blogs.title != blog.title %}
-       <a href="{% url 'blog_detail' blog.slug %}">{{ blogs.title }}</a><br>
-    {%endif%}
-    {% endfor %}
+{% block right %}
 
-    {% endblock right %}
+{% for blogs in top_blogs %}
+{%if blogs.title != blog.title %}
+<a href="{% url 'blog_detail' blogs.slug %}">{{ blogs.title }}</a><br>
+{%endif%}
+{% endfor %}
+
+{% endblock right %}
 
 {% block content %}
 
@@ -23,15 +23,30 @@
     <p> Sana {{blog.created_at }} | ko`rish {{ blog.views }} </p>
     <p> Blog yaratuvchi <strong> {{i.user.username}}</strong> </p>
     {% for tag in blog.tags.all%}
-    <a href="{% url 'tag_list' tag.slug %}">{{ tag.name }}  </a> 
+    <a href="{% url 'tag_list' tag.slug %}">{{ tag.name }} </a>
     {%endfor%}
     <hr>
+    {% if blog.user.username == request.user.username %}
     <a href="{% url 'blog_updete' blog.slug %}">updete</a> |
     <a href="{% url 'blog_delete' blog.slug %}">delete</a>
+    <hr>
+    {%endif%}
+    <div>
+        {% for com in comment %}
+        <p>{{ com.user.username }}</p>
+        <p>{{ com.created }}</p>
+        <p>{{ com.text }}</p>
+        {%endfor%}
+    </div>
+    <hr>
+    <form method="post" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" >saqlash</button>
+    </form>
 
 </div>
 
 
 
 {% endblock content %}
-

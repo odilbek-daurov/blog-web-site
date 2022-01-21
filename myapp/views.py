@@ -1,8 +1,9 @@
 from taggit.views import Tag
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
-from .models import Blog, Category
-from .forms import BlogForm
+from .models import Blog, Category,Comment
+from .forms import BlogForm, CommetForm
 from django.template.defaultfilters import slugify
+from django.core.paginator import Paginator, EmptyPage
 
 
 
@@ -10,8 +11,14 @@ def blog_list(request):
     blog = Blog.objects.all()
     blogs_top = Blog.objects.order_by('-views')[:5]
     
+    paginator = Paginator(blog, 2)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = paginator.get_page(page_number)
+    except EmptyPage:
+        page_obj = paginator.page(1)
     context = {
-        "blogs":blog,
+        "blogs":page_obj,
         'blogs_top':blogs_top,
     }
     return render(request, 'home.html',context)
@@ -42,11 +49,27 @@ def category_list(reques):
 def blog_detail(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     top_blogs = Blog.objects.filter(category = blog.category )
+    comment = Comment.objects.filter(blog = blog)
+    
     blog.views += 1
     blog.save()
+    
+    if request.method == "POST":
+        form = CommetForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.blog = blog
+            form.save()
+            return redirect('blog_detail', blog.slug) 
+    else:
+        form = CommetForm()
+        
     context = {
         "blog":blog,
-        'top_blogs':top_blogs
+        'top_blogs':top_blogs,
+        'form':form,
+        "comment":comment,
     }
     
     return render(request,"blog_detail.html",context)

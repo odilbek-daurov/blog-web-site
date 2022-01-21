@@ -32,4 +32,4 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     text = models.TextField()
-    
+    created = models.DateTimeField(auto_now_add=True)
