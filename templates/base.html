@@ -75,18 +75,33 @@
                         <a class="nav-link active" aria-current="page" href="{% url 'blog_create' %}">Maqola yozish</a>
                     </li>
                 </ul>
+                {% if user.is_authenticated %}
                 <span class="navbar-text">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">
+                                {{user.username}}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">chiqish</a>
+                        </li>
+                    </ul>
+                </span>
+                {% else %}
+                <span class="navbar-text">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'login' %}">
                                 Kirish
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Ro'yxatdan o'tish + </a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'signup' %}">Ro'yxatdan o'tish + </a>
                         </li>
                     </ul>
                 </span>
+                {%endif%}
             </div>
         </div>
     </nav>

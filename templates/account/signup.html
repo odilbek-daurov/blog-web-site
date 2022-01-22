@@ -1,0 +1,49 @@
+{% extends "../base.html" %}
+{% load widget_tweaks %}
+{% block title %}
+  signup
+{% endblock title %}
+
+{% block content %}
+
+
+
+<div class="container">
+  <div class="row">
+      <div class="col-lg-6">
+          Rasm uchun
+      </div>
+      <div class="col-lg-6">
+          <form method="post">
+              {% csrf_token %}
+              <div class="mb-3">
+                  <label for="first-name" class="form-label">First name</label>
+                  {% render_field form.first_name id="first-name" class="form-control" %}
+              </div>
+              <div class="mb-3">
+                  <label for="last-name" class="form-label">Last name</label>
+                  {% render_field form.last_name id="last-name" class="form-control" %}
+              </div>
+              <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  {% render_field form.email id="email" class="form-control" %}
+              </div>
+              <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  {% render_field form.username id="username" class="form-control" %}
+              </div>
+              <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>
+                  {% render_field form.password1 id="exampleInputPassword1" class="form-control" %}
+              </div>
+              <div class="mb-3">
+                  <label for="exampleInputPassword2" class="form-label">Password</label>
+                  {% render_field form.password2 id="exampleInputPassword2" class="form-control" %}
+              </div>
+              <button type="submit" class="btn btn-primary">SignUp</button>
+          </form>
+      </div>
+  </div>
+</div>
+
+{% endblock content %}

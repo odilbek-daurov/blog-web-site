@@ -1,10 +1,52 @@
 from taggit.views import Tag
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from .models import Blog, Category,Comment
-from .forms import BlogForm, CommetForm
+from .forms import BlogForm, CommetForm, RegisterForm, Ozgartirish
 from django.template.defaultfilters import slugify
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 
+
+def signup(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('blog_list')
+    else:
+        form = RegisterForm()
+        
+    context = {
+            'form':form,
+        }
+        
+    return render(request, 'account/signup.html', context)
+        
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data = request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('blog_list')
+        
+    else:
+        form = AuthenticationForm()
+    return render(request, 'account/login.html', {'form':form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
+
+def parol_ozgartirish(request):
+    if request.method == 'POST':
+        form = Ozgartirish(request.POST)
+        id 
 
 
 def blog_list(request):
@@ -84,7 +126,7 @@ def tag_list(request, slug):
     }
     return render(request,'home.html',context)
 
-
+@login_required()
 def blog_create(request):
     form = BlogForm()
     if request.method == 'POST':
@@ -135,3 +177,4 @@ def blog_delete(request, slug):
     }
     
     return render(request, 'blog_delete.html', context)
+
